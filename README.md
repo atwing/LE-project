@@ -1,2 +1,2 @@
 # LE-project
-Language Engineering Project: Word Prediction (Shieet)
+Language Engineering Project: Word Prediction (n-grams)
