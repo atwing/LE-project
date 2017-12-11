@@ -97,12 +97,19 @@ def main():
     corpus = process_test_file(arguments.corpus)
     # corpus = "the cat is red the cat is green the cat is blue the dog is brown"
     
-    bigrams = nltk.ngrams(corpus, 2)
+    # bigrams = nltk.ngrams(corpus, 2)
+    trigrams = nltk.ngrams(corpus, 3)
+    # freq2 = nltk.ConditionalFreqDist(bigrams)
+    # freq3 = nltk.ConditionalFreqDist(trigrams)
+    # freqprob2 = nltk.ConditionalProbDist(freq2, nltk.MLEProbDist)
+
+    condition_pairs = (((w0, w1), w2) for w0, w1, w2 in trigrams)
+    cfd = nltk.ConditionalFreqDist(condition_pairs)
 
     pdb.set_trace() 
 
     # We call the conditional probability dictionary builder function
-    conditional_probabilities = build_conditional_probabilities(bigrams)
+    conditional_probabilities = build_conditional_probabilities(corpus)
     
     print(conditional_probabilities)
     # Some sample queries to the bigram predictor
