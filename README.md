@@ -1,2 +1,2 @@
 # LE-project
-Language Engineering
+Language Engineering Project: Word Prediction
