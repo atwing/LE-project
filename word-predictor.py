@@ -1,6 +1,8 @@
 from collections import defaultdict
 import nltk
 import pdb
+import argparse
+import codecs
 
 def build_conditional_probabilities(corpus):
     """
@@ -62,7 +64,7 @@ def bigram_next_word_predictor(conditional_probabilities, current, next_candidat
 
     return 0.0
 
-def process_test_file(self, test_filename):
+def process_test_file(test_filename):
     """
     <p>Reads and processes the test file one word at a time. </p>
 
@@ -71,22 +73,33 @@ def process_test_file(self, test_filename):
     """
     try:
         with codecs.open(test_filename, 'r', 'utf-8') as f:
-            self.tokens = nltk.word_tokenize(f.read().lower()) # Important that it is named self.tokens for the --check flag to work
-            for token in self.tokens:
-                self.compute_entropy_cumulatively(token)
+            tokens = nltk.word_tokenize(f.read().lower()) # Important that it is named tokens for the --check flag to work
+            # for token in tokens:
+                # compute_entropy_cumulatively(token)
 
             # take average using N (number of tokens in test corpus)
-            self.logProb = -self.logProb/self.test_words_processed
-            print(self.test_words_processed)
-        return True
+            # logProb = -logProb/test_words_processed
+            # print(test_words_processed)
+        return tokens
     except IOError:
         print('Error reading testfile')
         return False
 
 def main():
     # An example corpus to try out the function
+
+    parser = argparse.ArgumentParser(description='BigramTester')
+    parser.add_argument('--corpus', '-t', type=str, required=True, help='test corpus')
+    parser.add_argument('--check', action='store_true', help='check if your alignment is correct')
+
+    arguments = parser.parse_args()
+    # pdb.set_trace()
+    corpus = process_test_file(arguments.corpus)
     # corpus = "the cat is red the cat is green the cat is blue the dog is brown"
-    process_test_file(arguments.test_corpus)
+    
+    bigrams = nltk.ngrams(corpus, 2)
+
+    pdb.set_trace() 
 
     # We call the conditional probability dictionary builder function
     conditional_probabilities = build_conditional_probabilities(corpus)
