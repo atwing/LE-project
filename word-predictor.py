@@ -102,7 +102,7 @@ def main():
     pdb.set_trace() 
 
     # We call the conditional probability dictionary builder function
-    conditional_probabilities = build_conditional_probabilities(corpus)
+    conditional_probabilities = build_conditional_probabilities(bigrams)
     
     print(conditional_probabilities)
     # Some sample queries to the bigram predictor
