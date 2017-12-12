@@ -2,10 +2,11 @@
 Language Engineering Project: 
 
 ## TODO:
-- #replace w/ nltk
-- try other policy than maximum likelihood
+- (done) replace w/ nltk
+- (done) try other policy than maximum likelihood
 	- predict next word
 		- **if word does not exist in trigrams, use bigrams for known word**
-- compare BIGRAM / TRIGRAM / (FOURGRAM)
+- compare BIGRAM / TRIGRAM / (QUADGRAM)
 	- (implement fourgrams)
-- (implement learning from new data/test data)
+- (done) implement learning from new data/test data
+- (suggestions: get top 3 probabilities and randomly choose one)
