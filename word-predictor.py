@@ -64,58 +64,54 @@ def bigram_next_word_predictor(conditional_probabilities, current, next_candidat
 
     return 0.0
 
-def process_test_file(test_filename):
+def process_train_file(train_filename):
     """
-    <p>Reads and processes the test file one word at a time. </p>
+    Reads and processes the train file one word at a time.
 
-    :param test_filename: The name of the test corpus file.
-    :return: <code>true</code> if the entire file could be processed, false otherwise.
+    train_filename: The name of the train corpus file.
+    return: extracted tokens from the corpus, None otherwise.
     """
     try:
-        with codecs.open(test_filename, 'r', 'utf-8') as f:
-            tokens = nltk.word_tokenize(f.read().lower()) # Important that it is named tokens for the --check flag to work
-            # for token in tokens:
-                # compute_entropy_cumulatively(token)
-
-            # take average using N (number of tokens in test corpus)
-            # logProb = -logProb/test_words_processed
-            # print(test_words_processed)
+        with codecs.open(train_filename, 'r', 'utf-8') as f:
+            tokens = nltk.word_tokenize(f.read().lower())
         return tokens
     except IOError:
-        print('Error reading testfile')
-        return False
+        print('Error reading training file')
+        return None
 
 def main():
-    # An example corpus to try out the function
+    # Read in corpus and predict next word based on n-gram probabilities
 
-    parser = argparse.ArgumentParser(description='BigramTester')
-    parser.add_argument('--corpus', '-t', type=str, required=True, help='test corpus')
-    parser.add_argument('--check', action='store_true', help='check if your alignment is correct')
+    # parser for input arguments
+    parser = argparse.ArgumentParser(description='WordPredictor')
+    parser.add_argument('--corpus', '-t', type=str, required=True, help='training corpus')
+    parser.add_argument('--test', '-t', type=str, required=True, help='test sample')
 
     arguments = parser.parse_args()
-    # pdb.set_trace()
-    corpus = process_test_file(arguments.corpus)
+
+    # read in training corpus and get tokens
+    corpus = process_train_file(arguments.corpus)
     # corpus = "the cat is red the cat is green the cat is blue the dog is brown"
     
-    # bigrams = nltk.ngrams(corpus, 2)
-    trigrams = nltk.ngrams(corpus, 3)
-    # freq2 = nltk.ConditionalFreqDist(bigrams)
-    # freq3 = nltk.ConditionalFreqDist(trigrams)
+    # get bigrams and their frequencies
+    bigrams = nltk.ngrams(corpus, 2)
+    bi_freq = nltk.ConditionalFreqDist(bigrams)
     # freqprob2 = nltk.ConditionalProbDist(freq2, nltk.MLEProbDist)
 
+    # get trigrams and their frequencies
+    trigrams = nltk.ngrams(corpus, 3)
     condition_pairs = (((w0, w1), w2) for w0, w1, w2 in trigrams)
-    cfd = nltk.ConditionalFreqDist(condition_pairs)
+    tri_freq = nltk.ConditionalFreqDist(condition_pairs)
+
+    # predict next word of a sample phrase
+    
 
     pdb.set_trace() 
-
-    # We call the conditional probability dictionary builder function
-    conditional_probabilities = build_conditional_probabilities(corpus)
     
-    print(conditional_probabilities)
     # Some sample queries to the bigram predictor
-    assert bigram_next_word_predictor(conditional_probabilities, "the", "cat") == 0.75
-    assert bigram_next_word_predictor(conditional_probabilities, "is", "red") == 0.25
-    assert bigram_next_word_predictor(conditional_probabilities, "", "red") == 0.0
+    # assert bigram_next_word_predictor(conditional_probabilities, "the", "cat") == 0.75
+    # assert bigram_next_word_predictor(conditional_probabilities, "is", "red") == 0.25
+    # assert bigram_next_word_predictor(conditional_probabilities, "", "red") == 0.0
 
 if __name__ == "__main__":
     main()
