@@ -1,12 +1,18 @@
-# Word Prediction (n-grams)
+# Word Predictor (n-grams)
 Language Engineering Project: 
 
-## TODO:
-- (done) replace w/ nltk
-- (done) try other policy than maximum likelihood
-	- predict next word
-		- **if word does not exist in trigrams, use bigrams for known word**
-- compare BIGRAM / TRIGRAM / (QUADGRAM)
-	- (implement fourgrams)
-- (done) implement learning from new data/test data
-- (suggestions: get top 3 probabilities and randomly choose one)
+## How to run the program:
+- enter the test sentence in "test.txt"  
+- run "word-predictor.py"
+- if the test sentence exists in the corpus, the next word is returned
+- if not, the user is asked to enter the next word
+- the unknown words are subsequently added to the dictionary
+- the number of predicted words can be adjusted in the program by altering the global variable MAX_PREDICTIONS 
+
+## Usage example:
+`$ python word-predictor.py --corpus kafka.txt --test test.txt --load`
+
+###### Arguments:
+--corpus: file containing training corpus  
+--test: file with a test sample  
+--load: load previously trained predictor model 

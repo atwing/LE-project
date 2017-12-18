@@ -71,7 +71,7 @@ def main():
         if tuple(sample[-2:]) not in tri_freq:
             # check bigram probabilities if two words don't exist in trigram list            
             if sample[-1] not in bi_freq:
-                print('Word not found in bigram list.')
+                print('Word not found in bigram & trigram list.')
                 in_str = raw_input("Please input word after '" + str(sample[-1]) + "': ")
                 bi_freq[sample[-1]][in_str] += 1
                 tri_freq[tuple(sample[-2:])][in_str] += 1
